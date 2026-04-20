@@ -1,0 +1,45 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: auralens
+    binary: auralens
+    main: .
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X github.com/lisiting01/auralens-cli/cmd.Version={{.Version}}
+      - -X github.com/lisiting01/auralens-cli/cmd.Commit={{.Commit}}
+      - -X github.com/lisiting01/auralens-cli/cmd.Date={{.Date}}
+
+archives:
+  - id: default
+    name_template: "auralens_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"

@@ -1,0 +1,7 @@
+*.exe
+auralens
+dist/
+.idea/
+.vscode/
+*.log
+.env
