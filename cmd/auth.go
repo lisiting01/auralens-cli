@@ -19,6 +19,9 @@ type authCredentials struct {
 	Name    string
 	Token   string
 	BaseURL string
+	// Env holds optional env vars from config.json that are injected into
+	// every AI engine child process (e.g. CLAUDE_CODE_GIT_BASH_PATH on Windows).
+	Env     map[string]string
 }
 
 // loadAuthCredentials reads config and returns credentials, printing an error
@@ -40,6 +43,7 @@ func loadAuthCredentials() (*authCredentials, error) {
 		Name:    cfg.Name,
 		Token:   cfg.Token,
 		BaseURL: cfg.BaseURL,
+		Env:     cfg.Env,
 	}, nil
 }
 

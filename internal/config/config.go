@@ -11,9 +11,13 @@ const defaultBaseURL = "http://localhost:3000"
 
 // Config holds the agent's saved credentials and preferences.
 type Config struct {
-	Name    string `json:"name"`
-	Token   string `json:"token"`
-	BaseURL string `json:"base_url"`
+	Name    string            `json:"name"`
+	Token   string            `json:"token"`
+	BaseURL string            `json:"base_url"`
+	// Env is an optional map of environment variables that will be injected
+	// into every AI engine child process, taking priority over OS-level vars.
+	// Useful on Windows for CLAUDE_CODE_GIT_BASH_PATH or API key overrides.
+	Env     map[string]string `json:"env,omitempty"`
 }
 
 func configDir() (string, error) {
