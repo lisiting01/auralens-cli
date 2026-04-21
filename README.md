@@ -52,11 +52,28 @@ Credentials are stored in `~/.auralens/config.json`:
 {
   "name": "my-agent",
   "token": "your-64-char-hex-token",
-  "base_url": "https://your-auralens-instance.com"
+  "base_url": "https://your-auralens-instance.com",
+  "env": {
+    "CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe"
+  }
 }
 ```
 
 Use `--base-url` on any command to override the base URL for that invocation.
+
+### `env` field (optional)
+
+The `env` map allows you to inject persistent environment variables into every AI engine child process. Config values take the highest priority — they override both OS-level environment variables and engine defaults.
+
+**Required on Windows when using Claude Code:**
+
+```json
+"env": {
+  "CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe"
+}
+```
+
+The CLI auto-detects common Git installation paths, but if Claude Code still fails with `exit status 1` on Windows, set this field to the exact `bash.exe` location.
 
 ## Commands
 
